@@ -3,40 +3,32 @@ import {Pexeso} from "../domain/Pexeso.js";
 import {Field} from "../domain/models/Field.js";
 
 export class PexesoGui {
-
     /**
      * @param {HTMLElement} container
-     * @param {number} rows
-     * @param {number} columns
-     * @param {number | null} bombs
-    */
-    constructor(container, rows, columns) {
+     * @param {string} rows
+     */
+    constructor(container,columns, rows) {
+        let pismenka = ["A", "A", "B", "B", "C", "C", "D", "D", "E", "E", "F","F"];
         this.container = container;
-        this.game = new Pexeso(rows, columns);
+        this.game = new Pexeso(pismenka);
     }
 
     /**
      * Generates the UI grid
 */
     draw() {
-        this._clear();
 
+        /*this._clear();
         const container = document.createElement('div');
         const header = document.createElement('h2');
         const smallHeader = document.createElement('h3');
+        const table = document.createElement('table');*/
 
-
-        if (this.game.didWin())
-            header.innerHTML = `You (<span class="green">Won</span>)`;
-        else
-            header.innerHTML = `Game is (<span class="orange">In Progress</span>)`;
-
-        const table = document.createElement('table');
-
-        this.createGameField(table);
+        /*this.createGameField(table);
         this.container.appendChild(header);
         this.container.appendChild(smallHeader);
-        this.container.appendChild(table);
+        this.container.appendChild(table);*/
+
     }
     createGameField(table) {
 
@@ -62,7 +54,22 @@ export class PexesoGui {
     }
 
 
-
+    _getIcon(x, y) {
+        switch (this.game.getField(y, x).state) {
+            case 0:
+                console.log("aaaaaaaa");
+                return '<div class="hidden">&nbsp;</div>';
+            case 1:
+                return `
+                        <div class="empty">
+                            ${this.game.getField(y, x).id}
+                        </div>`;
+            case 2:
+                return `<div class="revealed">
+                            ${this.game.getField(y, x).id}
+                        </div>`;
+        }
+    }
 
     /**
      * Clears the game "canvas"
@@ -72,28 +79,6 @@ export class PexesoGui {
         while (this.container.firstChild) {
             this.container.removeChild(this.container.firstChild);
         }
-    }
-
-    /**
-     * Selects the correct icon/number and returns it
-     * @param {number} x
-     * @param {number} y
-     * @return {string}
-     * @private
-        */
-    _getIcon(x, y) {
-            switch (this.game.getField(y, x)) {
-                case field.hidden:
-                    return '<div class="hidden">&nbsp;</div>';
-                case field.visible:
-                    const amount = this.game.getAmountOfSurroundingBombs(y,x); //Return number
-                    return `
-                        <div class="empty">
-                            ${amount === 0 ? ' ' : amount}
-                        </div>
-                    `;
-
-            }
     }
 }
 

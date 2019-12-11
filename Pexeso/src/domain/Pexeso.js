@@ -7,8 +7,6 @@ export class Pexeso {
 
     /**
      * @param {number} rows
-     * @param {number} columns
-     * @param {number | null} bombs
      */
 
     constructor(rows, columns) {
@@ -34,22 +32,7 @@ export class Pexeso {
             }
             this.pexesofield.push(tempArray);
         }
-
-        this.isGameOver = false;
-
-
     }
-
-
-    /**
-     * TODO: IMPLEMENT THIS
-     * Calculate how many bombs should be on the field and return it.
-     * The calculation should Depend on the size of the field.
-     * @private
-     * @return {number} amount of bombs
-     */
-
-
     /**
      * TODO: IMPLEMENT THIS
      * Returns the current state of the field.
@@ -99,7 +82,7 @@ export class Pexeso {
     clearPair(){
         for(let i = 0; i < this.rows;i++){
             for(let j = 0; j < this.columns; j++){
-                if(this.pexesofield[i][j].id === this.pair.cell1 ||this.pexesofield[i][j].id === this.pair.cell2 ){
+                if(this.pexesofield[i][j].id === this.pair.cell1 || this.pexesofield[i][j].id === this.pair.cell2 ){
                     this.pexesofield[i][j].state = 0;
                 }
             }
@@ -115,7 +98,7 @@ export class Pexeso {
     didWin() {
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.columns; j++) {
-                if (this.fields[i][j].state === 0) {
+                if (this.pexesofield[i][j].state === 0) {
                     return false;
                 }
             }
